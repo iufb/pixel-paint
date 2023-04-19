@@ -23,7 +23,7 @@ export const HomeSlide = ({ className }: HomeSlideProps): JSX.Element => {
       >
         <motion.header
           {...slideAnimation("down")}
-          className="w-full max-h-[50px] gap-2  flex justify-center    "
+          className="w-full max-h-[50px] gap-6 flex justify-center    "
         >
           <FaPaintBrush className="w-12 h-12 fill-gray-500 hover:fill-blue-500" />
           <motion.h1
