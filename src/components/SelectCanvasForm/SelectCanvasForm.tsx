@@ -1,17 +1,37 @@
 import { useAppContext } from "@/context/app.context"
 import { SelectCanvasFormProps } from "./SelectCanvasForm.props"
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import { Button } from "../ui/Button/Button"
 import Link from "next/link"
 
+const getFullAmountOfCells = (width: number) => {
+  const remainder = width % 24
+  return (width - remainder) / 24
+}
 export const SelectCanvasForm = ({
   className,
   ...props
 }: SelectCanvasFormProps): JSX.Element => {
-  const numbers = Array.from({ length: 101 }, (_, i) => i)
   const { selectCanvas, canvasParameters } = useAppContext()
+
   const [width, setWidth] = useState(0)
   const [height, setHeight] = useState(0)
+  const [containerWidth, setContainerWidth] = useState(0)
+  const [containerHeight, setContainerHeight] = useState(0)
+  useEffect(() => {
+    setContainerWidth(window.innerWidth)
+    setContainerHeight(window.innerHeight - 290)
+    console.log("containerHeight : ", containerHeight)
+  }, [])
+  const widthCells = Array.from(
+    { length: getFullAmountOfCells(containerWidth) },
+    (_, i) => i
+  )
+  const heightCells = Array.from(
+    { length: getFullAmountOfCells(containerHeight) },
+    (_, i) => i
+  )
+
   console.log(canvasParameters)
   const isDisabled = () => {
     return width == 0 || height == 0
@@ -29,7 +49,7 @@ export const SelectCanvasForm = ({
             onChange={e => setWidth(Number(e.target.value))}
             className="select"
           >
-            {numbers.map(n => (
+            {widthCells.map(n => (
               <option key={n}>{n}</option>
             ))}
           </select>
@@ -44,7 +64,7 @@ export const SelectCanvasForm = ({
             onChange={e => setHeight(Number(e.target.value))}
             className="select"
           >
-            {numbers.map(n => (
+            {heightCells.map(n => (
               <option key={n}>{n}</option>
             ))}
           </select>

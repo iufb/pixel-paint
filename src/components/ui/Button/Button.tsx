@@ -17,7 +17,9 @@ export const Button = ({
     <button
       tabIndex={0}
       disabled={disabled}
-      className={`${className} px-2 py-2 border w-full  rounded-md ${renderColor()} `}
+      className={`${className} px-2 py-2 border w-full ${
+        disabled ? "hover:cursor-not-allowed" : "hover:cursor-pointer"
+      }  rounded-md ${renderColor()} `}
       {...props}
     >
       {title}
